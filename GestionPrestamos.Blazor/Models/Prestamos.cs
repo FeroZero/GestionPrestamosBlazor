@@ -17,7 +17,11 @@ public partial class Prestamos
     [Range(1, double.MaxValue, ErrorMessage = "El monto no puede ser menor a 1")]
     public double Monto { get; set; }
 
-    public double Balance { get; set; }
+	[Required(ErrorMessage = "Este campo es requerido")]
+    [Range(1,100000, ErrorMessage = "Cantidad excedida.")]
+	public int CantidadCuotas { get; set; }
+
+	public double Balance { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un deudor válido")]
     public int DeudorId { get; set; }
@@ -25,4 +29,6 @@ public partial class Prestamos
     [ForeignKey("DeudorId")]
     [InverseProperty("Prestamos")]
     public virtual Deudores Deudor { get; set; } = null!;
+
+	public virtual ICollection<PrestamosDetalle> PrestamosDetalle { get; set; } = new List<PrestamosDetalle>();
 }
